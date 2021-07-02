@@ -12,7 +12,7 @@ public class BoardManager : MonoBehaviour
         public int minimum;
         public int maximum;
 
-        public Count (int min, int max)
+        public Count(int min, int max)
         {
             minimum = min;
             maximum = max;
@@ -60,7 +60,7 @@ public class BoardManager : MonoBehaviour
 
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x,y,0f), Quaternion.identity) as GameObject;
 
-                instance.transform.setParent(boardHolder);
+                instance.transform.SetParent(boardHolder);
             }
         }
     }
@@ -80,8 +80,8 @@ public class BoardManager : MonoBehaviour
         for (int i = 0; i < objectCount; i++)
         {
             Vector3 randomPosition = RandomPosition();
-            GameObject tileChoice = tileArray[Random.Range(0, tileArray.Lenght)];
-            Instanciate(tileChoice, randomPosition, Quaternion.indenty);
+            GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
+            Instantiate(tileChoice, randomPosition, Quaternion.identity);
         }
     }
 
@@ -90,8 +90,8 @@ public class BoardManager : MonoBehaviour
         BoardSetup();
         InitialiseList();
         LayoutObjectAtRandom(wallTiles, wallCount.minimum, wallCount.maximum);
-        LayoutObjectAtRandom(foodTiles, foodTiles.minimum, foodTiles.maximum);
-        int enemyCount = (int)MathF.Log(level, 2f);
+        LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
+        int enemyCount = (int)Mathf.Log(level, 2f);
         LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
         Instantiate(exit, new Vector3(columns - 1, rows -1, 0f), Quaternion.identity);
     }
