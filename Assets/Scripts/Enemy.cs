@@ -10,12 +10,15 @@ public class Enemy : MovingObject
     private Transform target;
     private bool skipMove;
 
+    public AudioClip enemyAttack1;
+    public AudioClip enemyAttack2;
+
     protected override void OnCantMove<T>(T component)
     {
         Player hitPlayer = component as Player;
         animator.SetTrigger("enemyAttack");
         hitPlayer.LoseFood(playerDamage);
-        base.Start();
+        SoundManager.instance.RandomizeSfx(enemyAttack1, enemyAttack2);
     }
 
     // Start is called before the first frame update
