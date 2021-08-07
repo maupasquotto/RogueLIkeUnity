@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public float turnDealy = .1f;
+    public float levelStartDealay = 2f;
 
     private const bool V = false;
     public static GameManager instance = null;
@@ -12,9 +14,12 @@ public class GameManager : MonoBehaviour
     public int playerFoodPoints = 100;
     [HideInInspector] public bool playersTurn = true;
 
-    private int level = 3;
+    private Text levelText;
+    private GameObject levelImage;
+    private int level = 1;
     private List<Enemy> enemies;
     public bool enemiesMoving;
+    private bool doingSetup;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,14 +35,36 @@ public class GameManager : MonoBehaviour
         InitGame();
     }
 
+    private void OnLevelWasLoaded(int level)
+    {
+        this.level++;
+        InitGame();
+    }
+
     void InitGame()
     {
+        doingSetup = true;
+
+        levelImage = GameObject.Find("LevelImage");
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        levelText.text = "Day " + level;
+        levelImage.SetActive(true);
+        Invoke("HideLevelImage", levelStartDealay);
+
         enemies.Clear();
         boardScript.SetupScene(level);
     }
 
+    private void HideLevelImage()
+    {
+        levelImage.SetActive(false);
+        doingSetup = false;
+    }
+
     public void GameOver()
     {
+        levelText.text = "After " + " days, you starved.";
+        levelImage.SetActive(true);
         enabled = V;
     }
 
